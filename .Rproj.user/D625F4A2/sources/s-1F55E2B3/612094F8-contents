@@ -1,0 +1,1509 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={NBA},
+  pdfauthor={Andrea Jiménez Zúñiga},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{NBA}
+\author{Andrea Jiménez Zúñiga}
+\date{10/28/2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{base-de-datos-nba}{%
+\subsection{BASE DE DATOS NBA}\label{base-de-datos-nba}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{library}\NormalTok{(MASS)}
+\KeywordTok{library}\NormalTok{(carData)}
+\KeywordTok{library}\NormalTok{(car)}
+\KeywordTok{library}\NormalTok{(timeDate)}
+\KeywordTok{library}\NormalTok{(timeSeries)}
+\KeywordTok{library}\NormalTok{(fBasics)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'fBasics'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:car':
+## 
+##     densityPlot
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(akima)}
+\KeywordTok{library}\NormalTok{(gvlma)}
+\NormalTok{nba <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"nba.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   Player = col_character(),
+##   NBA_Country = col_character(),
+##   Tm = col_character()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## See spec(...) for full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nba <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(nba)}
+\KeywordTok{View}\NormalTok{(nba)}
+\end{Highlighting}
+\end{Shaded}
+
+Voy a cambiar el nombre de algunas variables que me dan problemas a la
+hora de ejecutar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{10}\NormalTok{] =}\StringTok{ "TS"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{13}\NormalTok{] =}\StringTok{ "ORB"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{14}\NormalTok{] =}\StringTok{ "DRB"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{15}\NormalTok{] =}\StringTok{ "TRB"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{16}\NormalTok{] =}\StringTok{ "AST"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{17}\NormalTok{] =}\StringTok{ "STL"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{18}\NormalTok{] =}\StringTok{ "BLK"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{19}\NormalTok{] =}\StringTok{ "TDV"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{20}\NormalTok{] =}\StringTok{ "USG"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{11}\NormalTok{] =}\StringTok{ "Three_PAr"}
+\KeywordTok{names}\NormalTok{(nba)[}\DecValTok{24}\NormalTok{] =}\StringTok{ "WS48"}
+\KeywordTok{names}\NormalTok{(nba)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Player"          "Salary"          "NBA_Country"     "NBA_DraftNumber"
+##  [5] "Age"             "Tm"              "G"               "MP"             
+##  [9] "PER"             "TS"              "Three_PAr"       "FTr"            
+## [13] "ORB"             "DRB"             "TRB"             "AST"            
+## [17] "STL"             "BLK"             "TDV"             "USG"            
+## [21] "OWS"             "DWS"             "WS"              "WS48"           
+## [25] "OBPM"            "DBPM"            "BPM"             "VORP"
+\end{verbatim}
+
+\hypertarget{modelo}{%
+\subsection{MODELO}\label{modelo}}
+
+Voy a hacer un modelo que incluya todas las variables de mi base de
+datos. Para ello hago el fitting con lm()
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{ (Salary }\OperatorTok{~}\StringTok{ }\NormalTok{NBA_DraftNumber}\OperatorTok{+}\NormalTok{Age}\OperatorTok{+}\NormalTok{G}\OperatorTok{+}\NormalTok{MP}\OperatorTok{+}\StringTok{ }\NormalTok{PER}\OperatorTok{+}\StringTok{ }\NormalTok{TS}\OperatorTok{+}\StringTok{ }\NormalTok{Three_PAr}\OperatorTok{+}\StringTok{ }\NormalTok{FTr}\OperatorTok{+}
+\StringTok{               }\NormalTok{ORB}\OperatorTok{+}\StringTok{ }\NormalTok{DRB}\OperatorTok{+}\StringTok{ }\NormalTok{TRB}\OperatorTok{+}\StringTok{ }\NormalTok{AST}\OperatorTok{+}\StringTok{ }\NormalTok{STL}\OperatorTok{+}\StringTok{ }\NormalTok{BLK}\OperatorTok{+}\StringTok{ }\NormalTok{TDV}\OperatorTok{+}\StringTok{ }\NormalTok{USG}\OperatorTok{+}\NormalTok{OWS}\OperatorTok{+}\NormalTok{DWS}\OperatorTok{+}\StringTok{ }\NormalTok{WS }\OperatorTok{+}\StringTok{ }\NormalTok{WS48}\OperatorTok{+}\StringTok{ }
+\StringTok{               }\NormalTok{OBPM}\OperatorTok{+}\NormalTok{DBPM}\OperatorTok{+}\StringTok{ }\NormalTok{BPM}\OperatorTok{+}\NormalTok{VORP, }\DataTypeTok{data=}\NormalTok{nba)}
+\KeywordTok{summary}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + MP + PER + 
+##     TS + Three_PAr + FTr + ORB + DRB + TRB + AST + STL + BLK + 
+##     TDV + USG + OWS + DWS + WS + WS48 + OBPM + DBPM + BPM + VORP, 
+##     data = nba)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -15344434  -2975002   -390994   2102049  21682686 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     -2250339    4899140  -0.459    0.646    
+## NBA_DraftNumber   -60481      12755  -4.742 2.83e-06 ***
+## Age               516821      56511   9.146  < 2e-16 ***
+## G                -154411      24983  -6.181 1.41e-09 ***
+## MP                  5657       1083   5.224 2.67e-07 ***
+## PER              -355059     280566  -1.266    0.206    
+## TS              -2162767    5149052  -0.420    0.675    
+## Three_PAr       -3458209    2357905  -1.467    0.143    
+## FTr              -158470     886960  -0.179    0.858    
+## ORB             -1055234     902929  -1.169    0.243    
+## DRB              -855005     893502  -0.957    0.339    
+## TRB              2006676    1788697   1.122    0.263    
+## AST               -19606      47542  -0.412    0.680    
+## STL              -196551     421995  -0.466    0.642    
+## BLK               110238     318223   0.346    0.729    
+## TDV                 4208      52692   0.080    0.936    
+## USG               169431     104692   1.618    0.106    
+## OWS             -1271685    4493110  -0.283    0.777    
+## DWS             -1735775    4518854  -0.384    0.701    
+## WS               1827796    4498896   0.406    0.685    
+## WS48             1914677   11797052   0.162    0.871    
+## OBPM             1878971    4744860   0.396    0.692    
+## DBPM             1438902    4660878   0.309    0.758    
+## BPM             -1295954    4678340  -0.277    0.782    
+## VORP              629465     633799   0.993    0.321    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5103000 on 458 degrees of freedom
+## Multiple R-squared:  0.5479, Adjusted R-squared:  0.5242 
+## F-statistic: 23.13 on 24 and 458 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{selecciuxf3n-de-variables}{%
+\subsection{SELECCIÓN DE VARIABLES}\label{selecciuxf3n-de-variables}}
+
+\hypertarget{aic}{%
+\subsubsection{AIC}\label{aic}}
+
+Genero un nuevo modelo con AIC para que me de las variables que son mas
+significativas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stepAIC}\NormalTok{(model, }\DataTypeTok{direction =} \StringTok{"backward"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=14944.57
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     FTr + ORB + DRB + TRB + AST + STL + BLK + TDV + USG + OWS + 
+##     DWS + WS + WS48 + OBPM + DBPM + BPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - TDV              1 1.6611e+11 1.1928e+16 14943
+## - WS48             1 6.8601e+11 1.1928e+16 14943
+## - FTr              1 8.3134e+11 1.1928e+16 14943
+## - BPM              1 1.9984e+12 1.1930e+16 14943
+## - OWS              1 2.0862e+12 1.1930e+16 14943
+## - DBPM             1 2.4821e+12 1.1930e+16 14943
+## - BLK              1 3.1253e+12 1.1931e+16 14943
+## - DWS              1 3.8425e+12 1.1931e+16 14943
+## - OBPM             1 4.0840e+12 1.1932e+16 14943
+## - WS               1 4.2986e+12 1.1932e+16 14943
+## - AST              1 4.4292e+12 1.1932e+16 14943
+## - TS               1 4.5947e+12 1.1932e+16 14943
+## - STL              1 5.6497e+12 1.1933e+16 14943
+## - DRB              1 2.3847e+13 1.1951e+16 14944
+## - VORP             1 2.5688e+13 1.1953e+16 14944
+## - TRB              1 3.2777e+13 1.1960e+16 14944
+## - ORB              1 3.5570e+13 1.1963e+16 14944
+## - PER              1 4.1708e+13 1.1969e+16 14944
+## <none>                          1.1928e+16 14945
+## - Three_PAr        1 5.6019e+13 1.1984e+16 14945
+## - USG              1 6.8209e+13 1.1996e+16 14945
+## - NBA_DraftNumber  1 5.8559e+14 1.2513e+16 14966
+## - MP               1 7.1068e+14 1.2638e+16 14970
+## - G                1 9.9486e+14 1.2922e+16 14981
+## - Age              1 2.1782e+15 1.4106e+16 15024
+## 
+## Step:  AIC=14942.58
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     FTr + ORB + DRB + TRB + AST + STL + BLK + USG + OWS + DWS + 
+##     WS + WS48 + OBPM + DBPM + BPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - FTr              1 7.9833e+11 1.1929e+16 14941
+## - WS48             1 8.4655e+11 1.1929e+16 14941
+## - BPM              1 1.9026e+12 1.1930e+16 14941
+## - OWS              1 2.1455e+12 1.1930e+16 14941
+## - DBPM             1 2.3904e+12 1.1930e+16 14941
+## - BLK              1 2.9601e+12 1.1931e+16 14941
+## - OBPM             1 3.9353e+12 1.1932e+16 14941
+## - DWS              1 3.9548e+12 1.1932e+16 14941
+## - WS               1 4.3514e+12 1.1932e+16 14941
+## - AST              1 4.5028e+12 1.1932e+16 14941
+## - TS               1 4.9180e+12 1.1933e+16 14941
+## - STL              1 6.1216e+12 1.1934e+16 14941
+## - DRB              1 2.4001e+13 1.1952e+16 14942
+## - VORP             1 2.7419e+13 1.1955e+16 14942
+## - TRB              1 3.2857e+13 1.1961e+16 14942
+## - ORB              1 3.5528e+13 1.1963e+16 14942
+## - PER              1 4.1563e+13 1.1969e+16 14942
+## <none>                          1.1928e+16 14943
+## - Three_PAr        1 5.7496e+13 1.1985e+16 14943
+## - USG              1 6.8726e+13 1.1997e+16 14943
+## - NBA_DraftNumber  1 5.8642e+14 1.2514e+16 14964
+## - MP               1 7.4947e+14 1.2677e+16 14970
+## - G                1 1.0114e+15 1.2939e+16 14980
+## - Age              1 2.1979e+15 1.4126e+16 15022
+## 
+## Step:  AIC=14940.61
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     ORB + DRB + TRB + AST + STL + BLK + USG + OWS + DWS + WS + 
+##     WS48 + OBPM + DBPM + BPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - WS48             1 5.7347e+11 1.1929e+16 14939
+## - BPM              1 1.9275e+12 1.1931e+16 14939
+## - OWS              1 1.9626e+12 1.1931e+16 14939
+## - DBPM             1 2.4285e+12 1.1931e+16 14939
+## - BLK              1 2.7993e+12 1.1931e+16 14939
+## - DWS              1 3.6782e+12 1.1932e+16 14939
+## - OBPM             1 3.9842e+12 1.1933e+16 14939
+## - WS               1 4.0905e+12 1.1933e+16 14939
+## - AST              1 5.1064e+12 1.1934e+16 14939
+## - TS               1 6.3387e+12 1.1935e+16 14939
+## - STL              1 6.3954e+12 1.1935e+16 14939
+## - DRB              1 2.4198e+13 1.1953e+16 14940
+## - VORP             1 2.7213e+13 1.1956e+16 14940
+## - TRB              1 3.2956e+13 1.1962e+16 14940
+## - ORB              1 3.5633e+13 1.1964e+16 14940
+## - PER              1 4.0808e+13 1.1969e+16 14940
+## <none>                          1.1929e+16 14941
+## - Three_PAr        1 5.6710e+13 1.1985e+16 14941
+## - USG              1 6.7933e+13 1.1997e+16 14941
+## - NBA_DraftNumber  1 5.9452e+14 1.2523e+16 14962
+## - MP               1 7.5413e+14 1.2683e+16 14968
+## - G                1 1.0231e+15 1.2952e+16 14978
+## - Age              1 2.2119e+15 1.4140e+16 15021
+## 
+## Step:  AIC=14938.63
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     ORB + DRB + TRB + AST + STL + BLK + USG + OWS + DWS + WS + 
+##     OBPM + DBPM + BPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - BPM              1 1.8942e+12 1.1931e+16 14937
+## - OWS              1 2.0437e+12 1.1931e+16 14937
+## - DBPM             1 2.3824e+12 1.1932e+16 14937
+## - BLK              1 2.4986e+12 1.1932e+16 14937
+## - DWS              1 3.5778e+12 1.1933e+16 14937
+## - OBPM             1 4.0291e+12 1.1933e+16 14937
+## - WS               1 4.1872e+12 1.1933e+16 14937
+## - STL              1 8.0410e+12 1.1937e+16 14937
+## - TS               1 9.3658e+12 1.1939e+16 14937
+## - AST              1 9.4428e+12 1.1939e+16 14937
+## - DRB              1 2.5243e+13 1.1954e+16 14938
+## - VORP             1 2.7016e+13 1.1956e+16 14938
+## - TRB              1 3.4128e+13 1.1963e+16 14938
+## - ORB              1 3.7538e+13 1.1967e+16 14938
+## <none>                          1.1929e+16 14939
+## - PER              1 5.7754e+13 1.1987e+16 14939
+## - Three_PAr        1 6.0637e+13 1.1990e+16 14939
+## - USG              1 1.1780e+14 1.2047e+16 14941
+## - NBA_DraftNumber  1 6.0118e+14 1.2530e+16 14960
+## - MP               1 9.0827e+14 1.2837e+16 14972
+## - G                1 1.0261e+15 1.2955e+16 14976
+## - Age              1 2.2128e+15 1.4142e+16 15019
+## 
+## Step:  AIC=14936.71
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     ORB + DRB + TRB + AST + STL + BLK + USG + OWS + DWS + WS + 
+##     OBPM + DBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - OWS              1 2.2294e+12 1.1933e+16 14935
+## - BLK              1 2.2870e+12 1.1933e+16 14935
+## - DWS              1 3.7974e+12 1.1935e+16 14935
+## - WS               1 4.4397e+12 1.1935e+16 14935
+## - DBPM             1 6.8285e+12 1.1938e+16 14935
+## - STL              1 8.3145e+12 1.1939e+16 14935
+## - TS               1 9.0223e+12 1.1940e+16 14935
+## - AST              1 9.2490e+12 1.1940e+16 14935
+## - DRB              1 2.6121e+13 1.1957e+16 14936
+## - VORP             1 2.7041e+13 1.1958e+16 14936
+## - TRB              1 3.5074e+13 1.1966e+16 14936
+## - ORB              1 3.8494e+13 1.1970e+16 14936
+## <none>                          1.1931e+16 14937
+## - PER              1 5.6419e+13 1.1987e+16 14937
+## - Three_PAr        1 5.9173e+13 1.1990e+16 14937
+## - OBPM             1 6.4825e+13 1.1996e+16 14937
+## - USG              1 1.1818e+14 1.2049e+16 14940
+## - NBA_DraftNumber  1 6.0585e+14 1.2537e+16 14959
+## - MP               1 9.0701e+14 1.2838e+16 14970
+## - G                1 1.0244e+15 1.2955e+16 14974
+## - Age              1 2.2211e+15 1.4152e+16 15017
+## 
+## Step:  AIC=14934.8
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     ORB + DRB + TRB + AST + STL + BLK + USG + DWS + WS + OBPM + 
+##     DBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - BLK              1 2.5147e+12 1.1936e+16 14933
+## - DBPM             1 6.5060e+12 1.1940e+16 14933
+## - STL              1 7.5744e+12 1.1941e+16 14933
+## - TS               1 8.6969e+12 1.1942e+16 14933
+## - AST              1 9.9197e+12 1.1943e+16 14933
+## - DWS              1 1.1664e+13 1.1945e+16 14933
+## - DRB              1 2.6162e+13 1.1959e+16 14934
+## - VORP             1 2.7873e+13 1.1961e+16 14934
+## - TRB              1 3.5184e+13 1.1968e+16 14934
+## - ORB              1 3.8644e+13 1.1972e+16 14934
+## <none>                          1.1933e+16 14935
+## - PER              1 5.7350e+13 1.1991e+16 14935
+## - Three_PAr        1 5.9448e+13 1.1993e+16 14935
+## - OBPM             1 6.5481e+13 1.1999e+16 14935
+## - WS               1 6.7750e+13 1.2001e+16 14936
+## - USG              1 1.1919e+14 1.2052e+16 14938
+## - NBA_DraftNumber  1 6.1313e+14 1.2546e+16 14957
+## - MP               1 9.0492e+14 1.2838e+16 14968
+## - G                1 1.0223e+15 1.2956e+16 14972
+## - Age              1 2.2192e+15 1.4153e+16 15015
+## 
+## Step:  AIC=14932.9
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     ORB + DRB + TRB + AST + STL + USG + DWS + WS + OBPM + DBPM + 
+##     VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - TS               1 7.5740e+12 1.1943e+16 14931
+## - AST              1 1.3347e+13 1.1949e+16 14931
+## - DWS              1 1.5885e+13 1.1952e+16 14932
+## - STL              1 1.9633e+13 1.1955e+16 14932
+## - DBPM             1 2.5586e+13 1.1961e+16 14932
+## - DRB              1 2.8375e+13 1.1964e+16 14932
+## - VORP             1 3.2257e+13 1.1968e+16 14932
+## - TRB              1 3.6606e+13 1.1972e+16 14932
+## - ORB              1 3.9541e+13 1.1975e+16 14932
+## <none>                          1.1936e+16 14933
+## - Three_PAr        1 6.4339e+13 1.2000e+16 14934
+## - WS               1 6.5921e+13 1.2002e+16 14934
+## - PER              1 8.0494e+13 1.2016e+16 14934
+## - OBPM             1 9.1834e+13 1.2028e+16 14935
+## - USG              1 1.2190e+14 1.2058e+16 14936
+## - NBA_DraftNumber  1 6.2550e+14 1.2561e+16 14956
+## - MP               1 9.1109e+14 1.2847e+16 14966
+## - G                1 1.0249e+15 1.2961e+16 14971
+## - Age              1 2.2300e+15 1.4166e+16 15014
+## 
+## Step:  AIC=14931.21
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     DRB + TRB + AST + STL + USG + DWS + WS + OBPM + DBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - AST              1 1.0384e+13 1.1954e+16 14930
+## - DWS              1 1.5493e+13 1.1959e+16 14930
+## - STL              1 1.5653e+13 1.1959e+16 14930
+## - DBPM             1 2.4747e+13 1.1968e+16 14930
+## - DRB              1 2.5711e+13 1.1969e+16 14930
+## - VORP             1 3.2902e+13 1.1976e+16 14930
+## - TRB              1 3.3685e+13 1.1977e+16 14931
+## - ORB              1 3.6474e+13 1.1980e+16 14931
+## <none>                          1.1943e+16 14931
+## - Three_PAr        1 5.7859e+13 1.2001e+16 14932
+## - WS               1 6.4533e+13 1.2008e+16 14932
+## - PER              1 8.2947e+13 1.2026e+16 14932
+## - OBPM             1 8.4435e+13 1.2028e+16 14933
+## - USG              1 1.2686e+14 1.2070e+16 14934
+## - NBA_DraftNumber  1 6.3399e+14 1.2577e+16 14954
+## - MP               1 9.2840e+14 1.2872e+16 14965
+## - G                1 1.0565e+15 1.3000e+16 14970
+## - Age              1 2.2224e+15 1.4166e+16 15012
+## 
+## Step:  AIC=14929.63
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     DRB + TRB + STL + USG + DWS + WS + OBPM + DBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - DWS              1 1.3674e+13 1.1967e+16 14928
+## - STL              1 1.6114e+13 1.1970e+16 14928
+## - DBPM             1 2.1136e+13 1.1975e+16 14928
+## - VORP             1 2.6050e+13 1.1980e+16 14929
+## - DRB              1 2.6228e+13 1.1980e+16 14929
+## - TRB              1 3.4480e+13 1.1988e+16 14929
+## - ORB              1 3.6227e+13 1.1990e+16 14929
+## - Three_PAr        1 4.8211e+13 1.2002e+16 14930
+## <none>                          1.1954e+16 14930
+## - WS               1 7.3809e+13 1.2028e+16 14931
+## - PER              1 7.5833e+13 1.2030e+16 14931
+## - OBPM             1 7.6710e+13 1.2030e+16 14931
+## - USG              1 1.1702e+14 1.2071e+16 14932
+## - NBA_DraftNumber  1 6.4110e+14 1.2595e+16 14953
+## - MP               1 9.2446e+14 1.2878e+16 14964
+## - G                1 1.0656e+15 1.3019e+16 14969
+## - Age              1 2.2142e+15 1.4168e+16 15010
+## 
+## Step:  AIC=14928.18
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     DRB + TRB + STL + USG + WS + OBPM + DBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - DBPM             1 1.3054e+13 1.1980e+16 14927
+## - STL              1 1.3666e+13 1.1981e+16 14927
+## - DRB              1 2.0975e+13 1.1988e+16 14927
+## - VORP             1 2.1716e+13 1.1989e+16 14927
+## - TRB              1 2.8572e+13 1.1996e+16 14927
+## - ORB              1 3.0256e+13 1.1998e+16 14927
+## <none>                          1.1967e+16 14928
+## - Three_PAr        1 6.1444e+13 1.2029e+16 14929
+## - WS               1 6.6537e+13 1.2034e+16 14929
+## - PER              1 9.3372e+13 1.2061e+16 14930
+## - OBPM             1 9.6756e+13 1.2064e+16 14930
+## - USG              1 1.1213e+14 1.2080e+16 14931
+## - NBA_DraftNumber  1 6.3970e+14 1.2607e+16 14951
+## - MP               1 9.8628e+14 1.2954e+16 14964
+## - G                1 1.0824e+15 1.3050e+16 14968
+## - Age              1 2.2279e+15 1.4195e+16 15009
+## 
+## Step:  AIC=14926.7
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     DRB + TRB + STL + USG + WS + OBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - STL              1 3.5855e+12 1.1984e+16 14925
+## - DRB              1 2.3335e+13 1.2004e+16 14926
+## - TRB              1 3.2795e+13 1.2013e+16 14926
+## - ORB              1 3.5036e+13 1.2016e+16 14926
+## - VORP             1 4.1953e+13 1.2022e+16 14926
+## <none>                          1.1980e+16 14927
+## - WS               1 5.6198e+13 1.2037e+16 14927
+## - Three_PAr        1 7.7957e+13 1.2058e+16 14928
+## - PER              1 8.9034e+13 1.2070e+16 14928
+## - OBPM             1 9.2588e+13 1.2073e+16 14928
+## - USG              1 1.0474e+14 1.2085e+16 14929
+## - NBA_DraftNumber  1 6.6016e+14 1.2641e+16 14951
+## - MP               1 9.9212e+14 1.2973e+16 14963
+## - G                1 1.1006e+15 1.3081e+16 14967
+## - Age              1 2.2220e+15 1.4202e+16 15007
+## 
+## Step:  AIC=14924.85
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     DRB + TRB + USG + WS + OBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - DRB              1 2.3150e+13 1.2007e+16 14924
+## - TRB              1 3.2841e+13 1.2017e+16 14924
+## - ORB              1 3.4831e+13 1.2019e+16 14924
+## - VORP             1 3.8380e+13 1.2022e+16 14924
+## <none>                          1.1984e+16 14925
+## - WS               1 6.4134e+13 1.2048e+16 14925
+## - Three_PAr        1 7.7528e+13 1.2062e+16 14926
+## - PER              1 9.9444e+13 1.2084e+16 14927
+## - OBPM             1 1.0195e+14 1.2086e+16 14927
+## - USG              1 1.1594e+14 1.2100e+16 14928
+## - NBA_DraftNumber  1 6.5690e+14 1.2641e+16 14949
+## - MP               1 9.8877e+14 1.2973e+16 14961
+## - G                1 1.1071e+15 1.3091e+16 14966
+## - Age              1 2.2380e+15 1.4222e+16 15006
+## 
+## Step:  AIC=14923.78
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     TRB + USG + WS + OBPM + VORP
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## - VORP             1 3.5447e+13 1.2043e+16 14923
+## <none>                          1.2007e+16 14924
+## - Three_PAr        1 7.6377e+13 1.2084e+16 14925
+## - WS               1 8.1813e+13 1.2089e+16 14925
+## - PER              1 1.0378e+14 1.2111e+16 14926
+## - OBPM             1 1.0573e+14 1.2113e+16 14926
+## - ORB              1 1.0859e+14 1.2116e+16 14926
+## - USG              1 1.1926e+14 1.2126e+16 14927
+## - TRB              1 2.3228e+14 1.2239e+16 14931
+## - NBA_DraftNumber  1 6.6587e+14 1.2673e+16 14948
+## - MP               1 9.6566e+14 1.2973e+16 14959
+## - G                1 1.0977e+15 1.3105e+16 14964
+## - Age              1 2.2414e+15 1.4249e+16 15004
+## 
+## Step:  AIC=14923.2
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     TRB + USG + WS + OBPM
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## <none>                          1.2043e+16 14923
+## - Three_PAr        1 8.1804e+13 1.2124e+16 14924
+## - ORB              1 1.2227e+14 1.2165e+16 14926
+## - PER              1 1.3025e+14 1.2173e+16 14926
+## - OBPM             1 1.3257e+14 1.2175e+16 14926
+## - USG              1 1.3897e+14 1.2182e+16 14927
+## - TRB              1 2.6687e+14 1.2310e+16 14932
+## - NBA_DraftNumber  1 6.5783e+14 1.2700e+16 14947
+## - WS               1 6.9027e+14 1.2733e+16 14948
+## - MP               1 9.6191e+14 1.3005e+16 14958
+## - G                1 1.3853e+15 1.3428e+16 14974
+## - Age              1 2.2154e+15 1.4258e+16 15003
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + MP + PER + 
+##     Three_PAr + ORB + TRB + USG + WS + OBPM, data = nba)
+## 
+## Coefficients:
+##     (Intercept)  NBA_DraftNumber              Age                G  
+##        -3893333           -62168           511716          -159255  
+##              MP              PER        Three_PAr              ORB  
+##            5204          -320540         -3013992          -201694  
+##             TRB              USG               WS             OBPM  
+##          333889           130873           845245           550301
+\end{verbatim}
+
+Con esta fórmula obtengo el siguiente modelo únicamente con las
+variables signifivativas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ Salary }\OperatorTok{~}\StringTok{ }\NormalTok{NBA_DraftNumber }\OperatorTok{+}\StringTok{ }\NormalTok{Age }\OperatorTok{+}\StringTok{ }\NormalTok{G }\OperatorTok{+}\StringTok{ }\NormalTok{MP }\OperatorTok{+}\StringTok{ }\NormalTok{PER }\OperatorTok{+}\StringTok{ }
+\StringTok{                 }\NormalTok{Three_PAr }\OperatorTok{+}\StringTok{ }\NormalTok{ORB }\OperatorTok{+}\StringTok{ }\NormalTok{TRB }\OperatorTok{+}\StringTok{ }\NormalTok{USG }\OperatorTok{+}\StringTok{ }\NormalTok{WS }\OperatorTok{+}\StringTok{ }\NormalTok{OBPM, }\DataTypeTok{data =}\NormalTok{ nba)}
+\KeywordTok{summary}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + MP + PER + 
+##     Three_PAr + ORB + TRB + USG + WS + OBPM, data = nba)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -15532214  -3017494   -365840   2303991  21608017 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     -3893332.9  2785355.5  -1.398  0.16284    
+## NBA_DraftNumber   -62168.3    12256.4  -5.072 5.66e-07 ***
+## Age               511716.1    54973.9   9.308  < 2e-16 ***
+## G                -159255.3    21635.8  -7.361 8.21e-13 ***
+## MP                  5204.0      848.4   6.134 1.82e-09 ***
+## PER              -320540.0   142016.8  -2.257  0.02446 *  
+## Three_PAr       -3013991.7  1685020.0  -1.789  0.07431 .  
+## ORB              -201694.2    92231.2  -2.187  0.02925 *  
+## TRB               333889.2   103347.8   3.231  0.00132 ** 
+## USG               130872.7    56136.5   2.331  0.02016 *  
+## WS                845245.2   162676.1   5.196 3.04e-07 ***
+## OBPM              550301.3   241673.6   2.277  0.02323 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5057000 on 471 degrees of freedom
+## Multiple R-squared:  0.5435, Adjusted R-squared:  0.5329 
+## F-statistic: 50.98 on 11 and 471 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Hago otro stepAIC para ver si puedo eliminar algunas de las variables
+del modelo 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stepAIC}\NormalTok{(model2, }\DataTypeTok{direction =} \StringTok{"backward"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=14923.2
+## Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     TRB + USG + WS + OBPM
+## 
+##                   Df  Sum of Sq        RSS   AIC
+## <none>                          1.2043e+16 14923
+## - Three_PAr        1 8.1804e+13 1.2124e+16 14924
+## - ORB              1 1.2227e+14 1.2165e+16 14926
+## - PER              1 1.3025e+14 1.2173e+16 14926
+## - OBPM             1 1.3257e+14 1.2175e+16 14926
+## - USG              1 1.3897e+14 1.2182e+16 14927
+## - TRB              1 2.6687e+14 1.2310e+16 14932
+## - NBA_DraftNumber  1 6.5783e+14 1.2700e+16 14947
+## - WS               1 6.9027e+14 1.2733e+16 14948
+## - MP               1 9.6191e+14 1.3005e+16 14958
+## - G                1 1.3853e+15 1.3428e+16 14974
+## - Age              1 2.2154e+15 1.4258e+16 15003
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + MP + PER + 
+##     Three_PAr + ORB + TRB + USG + WS + OBPM, data = nba)
+## 
+## Coefficients:
+##     (Intercept)  NBA_DraftNumber              Age                G  
+##        -3893333           -62168           511716          -159255  
+##              MP              PER        Three_PAr              ORB  
+##            5204          -320540         -3013992          -201694  
+##             TRB              USG               WS             OBPM  
+##          333889           130873           845245           550301
+\end{verbatim}
+
+Aparece que no puedo eliminar las variables poco significativas del
+modelo 2.
+
+\hypertarget{anova}{%
+\subsubsection{ANOVA}\label{anova}}
+
+Voy a comparar ambos modelos con anova.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(model, model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: Salary ~ NBA_DraftNumber + Age + G + MP + PER + TS + Three_PAr + 
+##     FTr + ORB + DRB + TRB + AST + STL + BLK + TDV + USG + OWS + 
+##     DWS + WS + WS48 + OBPM + DBPM + BPM + VORP
+## Model 2: Salary ~ NBA_DraftNumber + Age + G + MP + PER + Three_PAr + ORB + 
+##     TRB + USG + WS + OBPM
+##   Res.Df        RSS  Df   Sum of Sq      F Pr(>F)
+## 1    458 1.1928e+16                              
+## 2    471 1.2043e+16 -13 -1.1504e+14 0.3398 0.9854
+\end{verbatim}
+
+Sale con un p = 0.9854. No es significativo el test, por lo que no
+aportan a la predicción lineal por lo que se justifica que elimine esas
+variables de mi modelo inicial.
+
+\hypertarget{deteccion-de-la-multicolinealidad}{%
+\subsection{DETECCION DE LA
+MULTICOLINEALIDAD:}\label{deteccion-de-la-multicolinealidad}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{vif}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NBA_DraftNumber             Age               G              MP             PER 
+##        1.262696        1.040844        5.394048        8.895257       29.081095 
+##       Three_PAr             ORB             TRB             USG              WS 
+##        2.755505        3.366046        4.884538        2.016768        3.568490 
+##            OBPM 
+##       27.843542
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{vif}\NormalTok{(model2))}\OperatorTok{>}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NBA_DraftNumber             Age               G              MP             PER 
+##           FALSE           FALSE            TRUE            TRUE            TRUE 
+##       Three_PAr             ORB             TRB             USG              WS 
+##           FALSE           FALSE            TRUE           FALSE           FALSE 
+##            OBPM 
+##            TRUE
+\end{verbatim}
+
+Hay multicolinealidad, hay factores que hinchan la variabilidad en mi
+modelo. Hay variables cuya raíz cuadrada del vif es mayor que 2 y por
+tanto tienen problemas de multicolinealidad, por lo que voy a eliminar
+esas variables de mi modelo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ Salary }\OperatorTok{~}\StringTok{ }\NormalTok{NBA_DraftNumber }\OperatorTok{+}\StringTok{ }\NormalTok{Age }\OperatorTok{+}\StringTok{ }\NormalTok{G}\OperatorTok{+}
+\StringTok{              }\NormalTok{Three_PAr }\OperatorTok{+}\StringTok{ }\NormalTok{ORB }\OperatorTok{+}\StringTok{ }\NormalTok{TRB }\OperatorTok{+}\StringTok{ }\NormalTok{USG }\OperatorTok{+}\StringTok{ }\NormalTok{WS }\OperatorTok{+}\StringTok{ }\NormalTok{OBPM , }\DataTypeTok{data =}\NormalTok{ nba)}
+\KeywordTok{summary}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + Three_PAr + 
+##     ORB + TRB + USG + WS + OBPM, data = nba)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -15718763  -3237174   -476591   2291904  21784544 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     -9067896    2272616  -3.990 7.65e-05 ***
+## NBA_DraftNumber   -74902      12677  -5.909 6.61e-09 ***
+## Age               506275      57353   8.827  < 2e-16 ***
+## G                 -42704      13271  -3.218  0.00138 ** 
+## Three_PAr         -64346    1373344  -0.047  0.96265    
+## ORB              -191298      94213  -2.030  0.04287 *  
+## TRB               117868      87748   1.343  0.17983    
+## USG               151380      46254   3.273  0.00114 ** 
+## WS               1487095     136388  10.903  < 2e-16 ***
+## OBPM              -20898      55565  -0.376  0.70701    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5293000 on 473 degrees of freedom
+## Multiple R-squared:  0.4977, Adjusted R-squared:  0.4881 
+## F-statistic: 52.07 on 9 and 473 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{vif}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NBA_DraftNumber             Age               G       Three_PAr             ORB 
+##        1.232766        1.033890        1.852140        1.670474        3.205359 
+##             TRB             USG              WS            OBPM 
+##        3.213590        1.249566        2.289186        1.343259
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{vif}\NormalTok{(model3))}\OperatorTok{>}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NBA_DraftNumber             Age               G       Three_PAr             ORB 
+##           FALSE           FALSE           FALSE           FALSE           FALSE 
+##             TRB             USG              WS            OBPM 
+##           FALSE           FALSE           FALSE           FALSE
+\end{verbatim}
+
+Muestro el intervalo de confianza para cada uno de los coeficientes
+parciales de regresión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{confint}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                        2.5 %      97.5 %
+## (Intercept)     -13533568.46 -4602223.25
+## NBA_DraftNumber    -99811.99   -49992.29
+## Age                393577.20   618973.26
+## G                  -68781.35   -16625.98
+## Three_PAr        -2762956.53  2634263.63
+## ORB               -376426.25    -6170.36
+## TRB                -54556.74   290293.62
+## USG                 60490.32   242268.80
+## WS                1219092.66  1755096.53
+## OBPM              -130083.07    88286.85
+\end{verbatim}
+
+\hypertarget{semilla-1234}{%
+\paragraph{Semilla 1234:}\label{semilla-1234}}
+
+Voy a establecer una semilla mediante set.seed(1234), para un total de n
+= 10 con los datos de la muestra.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{10}
+\NormalTok{muestra <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(nba), }\DataTypeTok{size =}\NormalTok{ n, }\DataTypeTok{replace=} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{nba10 <-}\StringTok{ }\NormalTok{nba[muestra,]}
+\NormalTok{nba10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 28
+##    Player Salary NBA_Country NBA_DraftNumber   Age Tm        G    MP   PER    TS
+##    <chr>   <dbl> <chr>                 <dbl> <dbl> <chr> <dbl> <dbl> <dbl> <dbl>
+##  1 Jason~ 5.22e6 USA                      20    31 WAS      31   276   8.2 0.444
+##  2 Gary ~ 2.55e6 USA                      19    23 DEN      65  2265  16.6 0.599
+##  3 D'Ang~ 5.56e6 USA                       2    21 BRK      44  1124  15.5 0.506
+##  4 Reggi~ 1.60e7 USA                      24    27 DET      41  1084  15.5 0.516
+##  5 Paul ~ 1.31e6 Germany                  48    23 CHI      54   824   5.2 0.444
+##  6 Davis~ 1.31e6 Latvia                   42    25 SAS      74  1067  14.2 0.587
+##  7 Nigel~ 9.22e4 USA                      62    23 TOT       6    60   2.4 0.362
+##  8 Chris~ 2.46e7 USA                       4    32 HOU      55  1753  24.3 0.601
+##  9 Dario~ 2.42e6 Croatia                  12    23 PHI      74  2229  16.1 0.587
+## 10 DeAnd~ 1.58e6 USA                      53    29 TOT      55   711   6.2 0.485
+## # ... with 18 more variables: Three_PAr <dbl>, FTr <dbl>, ORB <dbl>, DRB <dbl>,
+## #   TRB <dbl>, AST <dbl>, STL <dbl>, BLK <dbl>, TDV <dbl>, USG <dbl>,
+## #   OWS <dbl>, DWS <dbl>, WS <dbl>, WS48 <dbl>, OBPM <dbl>, DBPM <dbl>,
+## #   BPM <dbl>, VORP <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predmuestra <-}\StringTok{ }\KeywordTok{predict}\NormalTok{( model3, }\DataTypeTok{newdata =}\NormalTok{ nba10)}
+\NormalTok{predmuestra}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           1           2           3           4           5           6 
+##  6905623.91  9608482.15  5208569.71  7729736.36 -1135652.55  5011297.33 
+##           7           8           9          10 
+##    51237.63 22986617.20 11298239.90  1891441.35
+\end{verbatim}
+
+\hypertarget{anuxe1lisis-de-la-normalidad}{%
+\subsection{ANÁLISIS DE LA
+NORMALIDAD:}\label{anuxe1lisis-de-la-normalidad}}
+
+\begin{verbatim}
+## Warning in rlm.default(x, y, weights, method = method, wt.method = wt.method, :
+## 'rlm' failed to converge in 20 steps
+\end{verbatim}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{verbatim}
+## [1] 112 326
+\end{verbatim}
+
+Me indica los valores atípicos más importantes que no te generan
+normalidad, por lo que hay que ver por qué. En este caso son el 326 y
+112 .
+
+\hypertarget{histograma-densidad-normal-rug}{%
+\subsection{HISTOGRAMA + DENSIDAD + NORMAL +
+RUG}\label{histograma-densidad-normal-rug}}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+Se observa que mis datos son mas extremos que mi normal.
+
+\hypertarget{contraste-de-normalidad-de-jarque-bera}{%
+\subsection{CONTRASTE DE NORMALIDAD DE
+JARQUE-BERA:}\label{contraste-de-normalidad-de-jarque-bera}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vResid=}\KeywordTok{resid}\NormalTok{(model3)}
+\KeywordTok{jbTest}\NormalTok{(vResid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate =
+## duplicate, : interpp.old() is deprecated, future versions will only provide
+## interpp()
+
+## Warning in interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate =
+## duplicate, : interpp.old() is deprecated, future versions will only provide
+## interpp()
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Title:
+##  Jarque - Bera Normality Test
+## 
+## Test Results:
+##   PARAMETER:
+##     Sample Size: 483
+##   STATISTIC:
+##     LM: 79.219
+##     ALM: 81.705
+##   P VALUE:
+##     ALM p-value: < 2.2e-16 
+##     Asymptotic: < 2.2e-16 
+## 
+## Description:
+##  Wed Oct 28 21:11:49 2020 by user:
+\end{verbatim}
+
+\hypertarget{shapiro-wilk-test}{%
+\subsection{SHAPIRO-WILK TEST:}\label{shapiro-wilk-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{shapiro.test}\NormalTok{(vResid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  vResid
+## W = 0.96773, p-value = 8.078e-09
+\end{verbatim}
+
+Como p-valor es menor que 0.05 se rechaza la hipotesis nula de que sigue
+una distribucion normal.
+
+\hypertarget{linealidad-componentes-o-gruxe1ficos-de-residuos-parciales}{%
+\subsection{LINEALIDAD: Componentes o Gráficos de residuos
+parciales}\label{linealidad-componentes-o-gruxe1ficos-de-residuos-parciales}}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+Se observa que hay problemas de linealidad ya que se obtiene una recta
+sobre las que se representan los puntos.
+
+\hypertarget{varianza-constante.homocedasticidad}{%
+\subsection{VARIANZA
+CONSTANTE.Homocedasticidad}\label{varianza-constante.homocedasticidad}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ncvTest}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-constant Variance Score Test 
+## Variance formula: ~ fitted.values 
+## Chisquare = 92.96626, Df = 1, p = < 2.22e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{spreadLevelPlot}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in spreadLevelPlot.lm(model3): 
+## 26 negative fitted values removed
+\end{verbatim}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{verbatim}
+## 
+## Suggested power transformation:  0.2500741
+\end{verbatim}
+
+Con un modelo explicativo esto es útil, pero no para un modelo
+predictivo ya que me he dado cuenta de que hay datos que no son
+homogéneos, por lo que tengo que hacer modelos distintos
+
+\hypertarget{validacion-global}{%
+\subsection{VALIDACION GLOBAL:}\label{validacion-global}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gvmodel <-}\StringTok{ }\KeywordTok{gvlma}\NormalTok{(model3)}
+\KeywordTok{summary}\NormalTok{(gvmodel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Salary ~ NBA_DraftNumber + Age + G + Three_PAr + 
+##     ORB + TRB + USG + WS + OBPM, data = nba)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -15718763  -3237174   -476591   2291904  21784544 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     -9067896    2272616  -3.990 7.65e-05 ***
+## NBA_DraftNumber   -74902      12677  -5.909 6.61e-09 ***
+## Age               506275      57353   8.827  < 2e-16 ***
+## G                 -42704      13271  -3.218  0.00138 ** 
+## Three_PAr         -64346    1373344  -0.047  0.96265    
+## ORB              -191298      94213  -2.030  0.04287 *  
+## TRB               117868      87748   1.343  0.17983    
+## USG               151380      46254   3.273  0.00114 ** 
+## WS               1487095     136388  10.903  < 2e-16 ***
+## OBPM              -20898      55565  -0.376  0.70701    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5293000 on 473 degrees of freedom
+## Multiple R-squared:  0.4977, Adjusted R-squared:  0.4881 
+## F-statistic: 52.07 on 9 and 473 DF,  p-value: < 2.2e-16
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = model3) 
+## 
+##                      Value   p-value                   Decision
+## Global Stat        86.1424 0.000e+00 Assumptions NOT satisfied!
+## Skewness           38.9659 4.313e-10 Assumptions NOT satisfied!
+## Kurtosis           40.2534 2.231e-10 Assumptions NOT satisfied!
+## Link Function       6.2771 1.223e-02 Assumptions NOT satisfied!
+## Heteroscedasticity  0.6461 4.215e-01    Assumptions acceptable.
+\end{verbatim}
+
+Hay problemas de simetria y de curtosis por lo que se rechaza la
+validación global.
+
+\hypertarget{outliers}{%
+\subsection{OUTLIERS:}\label{outliers}}
+
+\hypertarget{valores-atipicos}{%
+\subsubsection{Valores atipicos:}\label{valores-atipicos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{outlierTest}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     rstudent unadjusted p-value Bonferroni p
+## 326 4.246533         2.6158e-05     0.012634
+## 112 4.212085         3.0315e-05     0.014642
+\end{verbatim}
+
+Nos identifica dos valores atípicos, el 326 y 112.
+
+\hypertarget{valores-extremos}{%
+\subsubsection{Valores extremos:}\label{valores-extremos}}
+
+Para identificarlos se usa el hat statistic.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hat.plot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(fit) \{}
+\NormalTok{  p <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{coefficients}\NormalTok{(fit))}
+\NormalTok{  n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{fitted}\NormalTok{(fit))}
+  \KeywordTok{plot}\NormalTok{(}\KeywordTok{hatvalues}\NormalTok{(fit), }\DataTypeTok{main=}\StringTok{"Index Plot of Hat Values"}\NormalTok{)}
+  \KeywordTok{abline}\NormalTok{(}\DataTypeTok{h=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}\OperatorTok{*}\NormalTok{p}\OperatorTok{/}\NormalTok{n, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{, }\DataTypeTok{lty=}\DecValTok{2}\NormalTok{)}
+  \KeywordTok{identify}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{n, }\KeywordTok{hatvalues}\NormalTok{(fit), }\KeywordTok{names}\NormalTok{(}\KeywordTok{hatvalues}\NormalTok{(fit)))}
+\NormalTok{\}}
+\KeywordTok{hat.plot}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{verbatim}
+## integer(0)
+\end{verbatim}
+
+Aparecen valores por encima de la segunda linea, esos son los valores
+extremos.
+
+\hypertarget{valores-influyentes-distancia-de-cook.}{%
+\subsubsection{Valores influyentes: Distancia de
+Cook.}\label{valores-influyentes-distancia-de-cook.}}
+
+Los valores de D mayores que 4/(n-k-1) indican que son variables
+influtentes. Voy a identificar primero esos valores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cutoff <-}\StringTok{ }\DecValTok{4}\OperatorTok{/}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(nba)}\OperatorTok{-}\KeywordTok{length}\NormalTok{(model3}\OperatorTok{$}\NormalTok{coefficients)}\OperatorTok{-}\DecValTok{2}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(model3, }\DataTypeTok{which=}\DecValTok{4}\NormalTok{, }\DataTypeTok{cook.levels=}\NormalTok{cutoff)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h=}\NormalTok{cutoff, }\DataTypeTok{lty=}\DecValTok{2}\NormalTok{, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Otra forma de identificar los valores influyentes es a traves de
+graficos added variable
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{avPlots}\NormalTok{(model3, }\DataTypeTok{ask=}\OtherTok{FALSE}\NormalTok{, }\DataTypeTok{id.method=}\StringTok{"identify"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+Represento el influence plot:
+
+\begin{verbatim}
+## Warning in plot.window(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy, type, ...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+
+## Warning in axis(side = side, at = at, labels = labels, ...): "id.method" is not
+## a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in box(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): "id.method" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in plot.xy(xy.coords(x, y), type = type, ...): "id.method" is not a
+## graphical parameter
+\end{verbatim}
+
+\includegraphics{NBA-HTML-_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{verbatim}
+##        StudRes        Hat       CookD
+## 112  4.2120847 0.01145403 0.019854070
+## 141 -1.0700388 0.55448887 0.142462404
+## 223  0.2146606 0.37088728 0.002722043
+## 326  4.2465330 0.03030578 0.054399562
+\end{verbatim}
+
+Los análisis muestran varias observaciones influyentes (posición 141 y
+223) que exceden los límites de preocupación para los valores de
+Leverages o Distancia Cook. Estudios más exhaustivos consistirían en
+rehacer el modelo sin las observaciones y ver el impacto. Cuanto más
+lejos esten es que son mas extremos.
+
+\end{document}
