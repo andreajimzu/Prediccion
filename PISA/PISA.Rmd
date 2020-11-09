@@ -1,0 +1,180 @@
+---
+title: "PISA"
+author: "Andrea Jiménez Zúñiga"
+date: "11/9/2020"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Libraries and functions, message=FALSE, warning=FALSE}
+library(ISLR)
+library(boot)
+library(splines)
+library(ggplot2)
+library(gam)
+library(readr)
+library(tidyverse)
+library(broom)
+library(flextable) 
+library(mgcv) 
+library(reshape2)
+library(imputeTS)
+library(skimr)
+library(magrittr)
+```
+
+# Read Data
+
+```{r}
+pisa <- read_csv("~/Desktop/CUNEF/PREDICCIÓN/PRACTICAS/PISA/pisasci2006.csv")
+View(pisa)
+attach(pisa)
+
+```
+
+```{r}
+pisa %>% clean_names()
+colnames(pisa)
+```
+
+# Summarize Data
+
+```{r Summarise Data}
+
+skim(pisa)
+
+```
+
+Se puede observar que hay datos que faltan, por lo que en lugar de eliminarlos voy a hacer la media de los mismos para no perder muchas observaciones, ya que nuestra base de datos no es grande. 
+
+```{r Data Wranling}
+
+pisa %<>% na_mean()
+
+skim(pisa)
+```
+
+# Smooth Splines
+
+Voy a calcular los splines a través de smooth splines, sacando los grados de libertad de cada una con la ventaja de que el valor óptimo de smoothness se puede identificar por cross validation.
+
+```{r}
+attach(pisa)
+
+intLims <- range(interest)
+
+plot(interest, overall, xlim=intLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(interest, overall, df=7)
+fit2 <- smooth.spline(interest, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('7 DF', '4.75 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+supLims <- range(support)
+
+plot(support, overall, xlim=supLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(support, overall, df=7)
+fit2 <- smooth.spline(support, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('7 DF', '2.001 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+inLims <- range(income)
+
+plot(income, overall, xlim=inLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(income, overall, df=8)
+fit2 <- smooth.spline(income, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('8 DF', '4.24 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+heLims <- range(health)
+
+plot(health, overall, xlim=heLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(health, overall, df=4)
+fit2 <- smooth.spline(health, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('4 DF', '2.002 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+eduLims <- range(edu)
+
+plot(edu, overall, xlim=eduLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(edu, overall, df=6)
+fit2 <- smooth.spline(edu, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('6 DF', '2.0023 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+hdiLims <- range(hdi)
+
+plot(hdi, overall, xlim=hdiLims, col='gray')
+title('Smoothing Spline')
+fit <- smooth.spline(hdi, overall, df=10)
+fit2 <- smooth.spline(hdi, overall, cv=TRUE)
+fit2$df
+lines(fit, col='red', lwd=2)
+lines(fit2, col='blue', lwd=1)
+legend('topright', legend=c('10 DF', '8.60 DF'),
+       col=c('red','blue'), lty=1, lwd=2, cex=0.8)
+
+```
+
+# Generalized Additive Models (GAM): 
+
+Los modelos GAM permiten obtener ajustes no lineales empleando múltiples predictores. En este caso se quiere crear un modelo GAM que permita predecir el Overall Science Score (overall) en función de la education, hdi, health, income, interest y support.
+
+```{r}
+
+model_gam <- gam(overall ~ s(edu, df=2.002) + s(hdi, df=8.603) + s(health, df=2.002) +s(income, df=4.244)+ s(interest, df=4.75)+s(support, df=2.001)  , data=pisa)
+
+summary(model_gam)
+plot(model_gam, se = TRUE, col = "red")
+
+```
+
+Dentro del modelo con la relación no lineal para education, hdi, health y support se puede confirmar  que estos componentes no contribuyen al modelo.
+El p-value obtenido de education, hdi, health y support no demuestra que la relación entre overall y esas variables no sea lineal, por lo que puede darse el caso de que habría sido mejor emplear un ajuste lineal en lugar de una smooth spline, reduciendo la complejidad del modelo. Para ello voy a realizar un análisis ANOVA. 
+Voy a comparar 3  modelos: El primer modelo (modelo_1) que no contiene los predictores , un modelo (modelo_2) que emplea una función lineal para esos predictores y un tercer modelo (model_gam) que emplea smooth spline.
+
+```{r}
+modelo_1 <- gam(overall ~ s(income, df=4.244)+ s(interest, df=4.75), data=pisa)
+modelo_2 <- gam(overall ~ support + health + edu + hdi + s(income, df=4.244)+ s(interest, df=4.75), data=pisa)
+model_gam <- gam(overall ~ s(edu, df=2.002) + s(hdi, df=8.603) + s(health, df=2.002) +s(income, df=4.244)+ s(interest, df=4.75)+s(support, df=2.001)  , data=pisa)
+
+# método anova para objetos de tipo gam
+anova(object = modelo_1, modelo_2, model_gam, test = "F")
+```
+
+Se puede observar que el modelo m_2 es mejor.
+```{r}
+summary(modelo_2)
+```
+
+A continuación, ajustamos una regresión local  en una GAM usando la función lo().
+
+```{r}
+gam.lo <- gam(overall ~ s(edu, df = 2.002)+ s(hdi, df = 8.603) + s(health, df = 2.002)+ s(support, df = 2.001) + lo(income, span=0.7) + lo(interest, span = 0.7),data=pisa)
+plot(gam.lo, se=TRUE, col='green')
+```
+
+Se puede concluir que el mejor modelo es el modelo que emplea una función lineal para support, education, health y hdi, empleando función no lineal para interest e income. De esta forma se ha reducido la complejidad del modelo. 
+
+
