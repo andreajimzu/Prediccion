@@ -1,0 +1,312 @@
+---
+title: "NBA - CV y Regularización"
+author: "Andrea Jiménez Zúñiga"
+date: "11/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+```
+
+```{r Libraries and functions, message=FALSE, warning=FALSE}
+library(here) # Comentar
+library(tidyverse)
+library(janitor) # Clean names
+library(skimr) # Beautiful Summarize
+library(magrittr) # Pipe operators
+library(corrplot) # Correlations
+library(ggcorrplot)  # Correlations
+library(PerformanceAnalytics) # Correlations
+library(leaps) # Model selection
+library(readr)
+library(rsample)
+library(glmnet)
+library(dplyr)
+library(ggplot2)
+```
+
+## Read Data
+
+```{r}
+nba_data <- read_csv("nba.csv")
+```
+
+```{r}
+
+colnames(nba_data)
+
+```
+
+## Nombre Variables
+
+```{r}
+nba_data %<>% clean_names()
+colnames(nba_data)
+```
+```{r Data Wranling}
+# delete duplicate
+# Remove duplicate rows of the dataframe
+nba_data %<>% distinct(player,.keep_all= TRUE)
+
+# delete NA's
+nba_data %<>% drop_na()
+```
+
+## Model Selection 
+
+Crear training (70%) y test (30%) para los datos de nba. 
+
+```{r}
+set.seed(1234)
+data_split <- initial_split(nba_data, prob = 0.70, strata = "salary")
+data_train <- training(data_split)
+data_test  <-  testing(data_split)
+```
+
+Creación de matrices para training y testing y vectores.
+```{r}
+data_train_x <- model.matrix(salary ~., data_train)[,-1]
+data_train_y <- log(data_train$salary)
+
+data_test_x <- model.matrix(salary ~., data_test)[,-1]
+data_test_y <- log(data_test$salary)
+
+```
+Dimensión de mi nueva matriz
+```{r}
+dim(data_train_x)
+```
+
+Ridge regression: 
+
+```{r}
+data_ridge <- glmnet(
+  x= data_train_x,
+  y= data_train_y,
+  alpha = 0
+)
+
+plot(data_ridge, xvar = "lambda")
+```
+
+```{r}
+data_ridge$lambda %>% head()
+```
+
+## TUNNING
+
+Aplicar Cross Validation a los datos. 
+
+Los errores de predicción son los puntos rojos. Conforme voy aumentando, aumenta lambda. 
+La segunda línea es la desviación típica, es decir, que entre esos dos puntos (de las dos líneas) no podemos predecir cuál es el mejor lambda.
+Cuanto más a la derecha esté en el gráfico más sencillo va a ser el modelo. 
+
+```{r}
+data_ridge_cv<- cv.glmnet(
+  x= data_train_x,
+  y = data_train_y,
+  alpha = 0
+)
+
+plot(data_ridge_cv)
+```
+Mínimo MSE
+```{r}
+min(data_ridge_cv$cvm)
+```
+Lambda para ese min MSE
+```{r}
+data_ridge_cv$lambda.min
+```
+
+```{r}
+log(data_ridge_cv$lambda.min)
+```
+
+Calculo el st.error de min MSE
+```{r}
+data_ridge_cv$cvm[data_ridge_cv$lambda == data_ridge_cv$lambda.1se]
+```
+Saco el lambda para ese MSE
+```{r}
+data_ridge_cv$lambda.1se
+```
+```{r}
+log(data_ridge_cv$lambda.1se)
+```
+
+```{r}
+plot(data_ridge, xvar = "lambda")
+abline(v = log( data_ridge_cv$lambda.1se), col = "red", lty = "dashed")
+```
+## Ventajas y Desventajas
+```{r}
+coef(data_ridge_cv, s = "lambda.1se") %>%
+  broom::tidy() %>%
+  filter(row != "(Intercept)") %>%
+  top_n(25, wt = abs(value)) %>%
+  ggplot(aes(value, reorder(row, value))) +
+  geom_point() +
+  ggtitle("Top 25 influential variables") +
+  xlab("Coefficient") +
+  ylab(NULL)
+```
+
+Una regresión cresta conserva todas las variables, por lo que para una mayor interpretación voy a realizar un modelo lasso que reduce la señal en sus datos a un subconjunto más pequeño.
+
+## LASSO
+
+alpha = 1 
+
+```{r}
+data_lasso <- glmnet ( 
+  x = data_train_x,
+  y = data_train_y,
+  alpha = 1
+)
+
+plot(data_lasso, xvar = "lambda")
+```
+
+## TUNNING - CV
+```{r}
+data_lasso_cv <- cv.glmnet(
+  x = data_train_x,
+  y = data_train_y,
+  alpha = 1
+)
+# plot results
+plot(data_lasso_cv)
+```
+Mínimo MSE
+```{r}
+min(data_lasso_cv$cvm)
+```
+Lambda para ese mínimo
+```{r}
+data_lasso_cv$lambda.min
+```
+1 st. error de min MSE
+```{r}
+data_lasso_cv$cvm[data_lasso_cv$lambda == data_lasso_cv$lambda.1se]  
+```
+Lambda para ese MSE
+```{r}
+data_lasso_cv$lambda.1se
+```
+```{r}
+plot(data_lasso, xvar = "lambda")
+abline(v = log(data_lasso_cv$lambda.min), col = "red", lty = "dashed")
+abline(v = log(data_lasso_cv$lambda.1se), col = "red", lty = "dashed")
+```
+
+Entre esos dos lambda hay el mismo error de predicción. 
+
+
+
+## Variables Influyentes:
+
+```{r}
+coef(data_lasso_cv, s = "lambda.1se") %>%
+  tidy() %>%
+  filter(row != "(Intercept)") %>%
+  ggplot(aes(value, reorder(row, value), color = value > 0)) +
+  geom_point(show.legend = FALSE) +
+  ggtitle("Influential variables") +
+  xlab("Coefficient") +
+  ylab(NULL)
+```
+Mínimo ridge MSE
+```{r}
+min(data_ridge_cv$cvm)
+```
+
+```{r}
+min(data_lasso_cv$cvm)
+```
+Calculando el mínimo que coge el Ridge y el Lasso se observa que se comporta mejor el lasso. 
+
+
+## ELASTIC NET
+
+Primero decido el alpha y luego establezco el lambda de cada modelo. 
+
+```{r}
+lasso    <- glmnet(data_train_x, data_train_y, alpha = 1.0) 
+elastic1 <- glmnet(data_train_x, data_train_y, alpha = 0.25) 
+elastic2 <- glmnet(data_train_x, data_train_y, alpha = 0.75) 
+ridge    <- glmnet(data_train_x, data_train_y, alpha = 0.0)
+
+par(mfrow = c(2, 2), mar = c(6, 4, 6, 2) + 0.1)
+plot(lasso, xvar = "lambda", main = "Lasso (Alpha = 1)\n\n\n")
+plot(elastic1, xvar = "lambda", main = "Elastic Net (Alpha = .25)\n\n\n")
+plot(elastic2, xvar = "lambda", main = "Elastic Net (Alpha = .75)\n\n\n")
+plot(ridge, xvar = "lambda", main = "Ridge (Alpha = 0)\n\n\n")
+```
+
+Para cada alpha elijo el mejor lambda.
+
+
+## TUNNING
+
+```{r}
+fold_id <- sample(1:10, size = length(data_train_y), replace=TRUE)
+
+# search across a range of alphas
+tuning_grid <- tibble::tibble(
+  alpha      = seq(0, 1, by = .1),
+  mse_min    = NA,
+  mse_1se    = NA,
+  lambda_min = NA,
+  lambda_1se = NA
+)
+tuning_grid
+```
+Ahora lo voy a rellenar con el mínimo, desviación típica, lambda mínimo y desviación típica.
+```{r}
+for(i in seq_along(tuning_grid$alpha)) {
+  
+  # fit CV model for each alpha value
+  fit <- cv.glmnet(data_train_x, data_train_y, alpha = tuning_grid$alpha[i], foldid = fold_id)
+  
+  # extract MSE and lambda values
+  tuning_grid$mse_min[i]    <- fit$cvm[fit$lambda == fit$lambda.min]
+  tuning_grid$mse_1se[i]    <- fit$cvm[fit$lambda == fit$lambda.1se]
+  tuning_grid$lambda_min[i] <- fit$lambda.min
+  tuning_grid$lambda_1se[i] <- fit$lambda.1se
+}
+
+tuning_grid
+```
+El mejor modelo numéricamente podría ser alpha = 1, pero estadísticamente no ya que todos están dentro del intervalo de confianza, es decir que todos son más o menos iguales, por lo que elegiría el lasso, es el meas sencillo, tiene menos variables.
+
+```{r}
+tuning_grid %>%
+  mutate(se = mse_1se - mse_min) %>%
+  ggplot(aes(alpha, mse_min)) +
+  geom_line(size = 2) +
+  geom_ribbon(aes(ymax = mse_min + se, ymin = mse_min - se), alpha = .25) +
+  ggtitle("MSE ± one standard error")
+```
+
+
+## PREDICCIÓN
+
+Best model:
+```{r}
+cv_lasso   <- cv.glmnet(data_train_x, data_train_y, alpha = 1.0)
+min(cv_lasso$cvm)
+
+```
+No hace falta hacer la predicción ya que anteriormente se ha observado que numéricamente el mejor modelo es el alpha = 1 que coincide con el modelo lasso, por lo que no lo voy a comparar con otro. 
+
+
+
+
+
+
+
