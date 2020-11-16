@@ -1,0 +1,179 @@
+---
+title: "Ventas Apple"
+author: "Andrea Jiménez Zúñiga"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción: 
+
+El objetivo principal es predecir las ventas de Apple. Para ello es necesario elegir el modelo ETS y ARIMA que mejor predice las ventas. 
+
+```{r warning=FALSE}
+library(forecast)
+require(forecast)
+library(xts) # PARA MANEJAR DATOS DE SERIES TEMPORALES (DATOS DE TIEMPO CONTINUO)
+require(xts)
+library(ggplot2)
+require(ggplot2)
+```
+
+## Carga de datos
+
+```{r}
+rawData <- read.csv2("./IngresosApple.csv")
+rawVentas<-rawData$Ingresos
+rawDate<-seq(as.Date("2008/04/01"), as.Date("2017/07/01"), by = "quarter") # Lo paso a trimestres y formato fecha
+```
+
+Creo un objeto xts para pasa los trimestres que están de tipo caracter a tipo fecha. 
+
+```{r}
+xVentas=xts(rawVentas,order.by=rawDate)
+```
+
+Paso los datos de xVentas a trimestres, para que me salga en el mismo formato que mi base  de datos rawData.
+
+```{r}
+
+xVentas=to.quarterly(xVentas)
+```
+
+Paso los datos a formato zoo. 
+```{r}
+
+zVentas=as.zoo(xVentas$xVentas.Close)
+
+names(zVentas)="Ventas"
+```
+
+
+## Representación Gráfica
+
+```{r}
+
+df_new <- data.frame(value = as.vector(zVentas),
+                     time = time(zVentas))
+ggplot(df_new)+geom_point(aes(x=time,y=value))+geom_line(aes(x=time,y=value))+ylab("Ventas")+ggtitle("Ventas Trimestrales APPLE")+xlab("Trimestres")
+
+```
+
+Se puede observar que las series no son estacionarias al igual que su media y varianza.
+
+Ahora voy a excluir 3 periodos, ya que para hacer los modelos tengo que dejar fuera de la estimación los trimestres de 2017.
+Para poder hacer mi modelo voya hacer un periodo de training y de test. 
+Primero tengo que indicar que voy a eliminar los 3 últimos datos (los de 2017). 
+
+```{r}
+cOmit=3
+nObs=length(zVentas) #Numero de observaciones
+```
+
+A continuación se realiza el Training
+
+```{r}
+oVentas <- window(zVentas,start=index(zVentas[1]),end=index(zVentas[nObs-cOmit])) #TRAINING
+```
+
+Realizo el Testing
+
+```{r}
+pVentas <- window(zVentas,start=index(zVentas[nObs-cOmit+1]),end=index(zVentas[nObs])) #TESTING 
+```
+
+## ARIMA Model: 
+
+Como se trata de un modelo cuya serie es no estacionaria y su media y varianza varían ralizo el ARIMA para convertir la serie en estacionaria.
+Voy a utilizar el modelo automático para obtener el mejor modelo. 
+
+```{r}
+fit2=auto.arima(oVentas,lambda=0)
+summary(fit2)
+```
+
+Análisis de residuos 
+
+```{r}
+ggtsdisplay(fit2$residuals)
+```
+
+Como todos los retardos están dentro de las líneas discontinuas azules quiere decir que el ACF y PACF son iguales a 0, es decir, son ruido blanco, por lo que el modelo es correcto, ya que ARIMA lo ha transformado a serie estacionaria.  
+
+## Box-Ljung Test
+```{r}
+
+Box.test(fit2$residuals,lag=4, fitdf=1, type="Lj")
+```
+
+
+```{r}
+Box.test(fit2$residuals,lag=8, fitdf=1, type="Lj")
+Box.test(fit2$residuals,lag=6, fitdf=1, type="Lj")
+
+```
+
+Como todos los p-valores son mayores de 0.05, por lo que se acepta la hipótesis nula, por lo que no hay autocorrelación y muestra que  hay ruido blanco, por lo que se confirma lo observado en la gráfica anterior.
+
+## Predicción
+
+Ahora predigo: 
+
+```{r}
+#Forecast
+fventas.arima=forecast(fit2)
+
+#plot
+ggplot(df_new)+geom_point(aes(x=time,y=value))+geom_line(aes(x=time,y=value))+ geom_forecast(fventas.arima,alpha=0.4)+ggtitle("ARIMA: Forecast APPLE")
+```
+```{r}
+#data
+fventas.arima
+```
+
+La sombra azul muestra las predicciones y en la  tabla se puede observar lo que se predice que va a ingresar en cada trimestre.
+
+## ETS: 
+
+Otro modelo es el ETS. 
+
+```{r}
+
+etsfit<-ets(oVentas,damped = TRUE)
+#forecast model
+fventas.ets=forecast(etsfit)
+#Results
+summary(fventas.ets)
+```
+```{r}
+#Plot
+ggplot(df_new)+geom_point(aes(x=time,y=value))+
+  geom_line(aes(x=time,y=value))+ 
+  geom_forecast(fventas.ets,color="red", alpha=0.183,plot.conf = FALSE)+
+  ggtitle("Forecast APPLE: ETS(red)")
+```
+
+Se puede observar en la sombra roja las predicciones, y en la tabla se puede ver las predicciones de ingresos para cada trimestre, dándonos valores más altos con el ETS. 
+
+
+## Selección del modelo: 
+
+```{r}
+summary(fit2)
+
+```
+
+```{r}
+summary(fventas.ets)
+```
+
+Para seleccionar el mejor modelo me voy a fijar en el AIC de cada uno, es decir, en el AIC de ARIMA y en el AIC de ETS. Para seleccionar el modelo me quedo con el que tenga mejor AIC, es decir, el que sea más bajo. En este caso, el AIC es el modelo ARIMA, ya que su AIC es el más bajo. 
+
+
+
+
+
+
+
