@@ -1,0 +1,350 @@
+---
+title: "Colgate vs Crest"
+author: "Andrea Jiménez Zúñiga"
+date: "11/18/2020"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+ 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Objetivo es predecir las 16 semanas del año 1963, para las dos cuotas de mercado, por lo que se dejará fuera de la muestra este periodo muestral.
+El análisis debe incluir para las dos series la estimación de un modelo ARIMA, la detección de atípicos/outliers y un modelo de interveción. Por último se debe realizar un modelo de función de tranferencia entre las dos cuotas.
+
+# Libraries and functions
+
+```{r Libraries and functions, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(skimr)
+library(modelr)
+library(mgcv)
+library(TSA)
+library(ggplot2)
+library(forecast)
+library(zoo)
+library(xts)
+library(tsoutliers)
+library(Hmisc)
+
+```
+
+## Data
+
+```{r warning=TRUE}
+library(readxl)
+cuotas_mercado <- read_excel("data.xlsx")
+attach(cuotas_mercado)
+```
+
+Agrupo por semanas y transformo a formato fecha la columna date.  
+
+```{r}
+cuotas_mercado$Date <- as.Date(paste(cuotas_mercado$Year, cuotas_mercado$Week,1,sep = "-"), "%Y-%U-%u")
+cuotas_mercado <- dplyr::select(cuotas_mercado, -Year, -Week)
+
+```
+
+
+```{r}
+cuotas_mercado <- as.data.frame(cuotas_mercado)
+```
+
+## Transformación de los datos.
+
+Voy a transformar la base de datos a formato xts y zoo. 
+
+```{r}
+xcuotas <- xts(cuotas_mercado[,-3], order.by = cuotas_mercado$Date) #Quito la columna date
+xcuotas$Date = NULL
+
+xcuotas1 <- xcuotas[,-1]  #PARA COLGATE
+xcuotas2 <- xcuotas[,-2]  #PARA CREST
+```
+
+```{r}
+zcuotas <- as.zoo(xcuotas)
+zcuotas1 <- as.zoo(xcuotas1)
+zcuotas2 <- as.zoo(xcuotas2)
+
+```
+
+Represento la evolución de ambas cuotas, para Colgate y para Crest, señalando la fecha del 1 de agosto de 1960, que fue cuando el Consejo de Terapéutica Dental de la American Dental Association (ADA) aprobó a Crest como una “ayuda importante en cualquier programa de higiene dental”.
+
+```{r}
+autoplot(zcuotas) + ylab('cuotas') + xlab('Year') + 
+  geom_vline(aes(xintercept = as.Date('1960-08-01'), col = "red"), show.legend = F)
+```
+
+Se puede observar que Crest muestra una tendencia creciente y Colgate una tendencia decreciente. (a partir del 1 de agosto de 1960).
+
+Plot de ambas: 
+
+```{r}
+plotColgate <- plot(log(xcuotas1), ylab= 'Log(Colgate)', xlab='Year')
+plot(plotColgate)
+
+plotCrest <- plot(log(xcuotas2), ylab= 'Log(Crest)', xlab='Year')
+plot(plotCrest)
+```
+
+
+```{r}
+autoplot(log(zcuotas1))+ylab('Log(Colgate)')+xlab('Year')
+autoplot(log(zcuotas2))+ylab('Log(Crest)')+xlab('Year')
+
+
+```
+
+```{r}
+ggtsdisplay(zcuotas1)
+ggtsdisplay(zcuotas2)
+
+```
+
+```{r}
+autoplot(diff(diff(zcuotas1,12)))
+autoplot(diff(diff(zcuotas2,12)))
+
+```
+
+```{r}
+ggtsdisplay(diff(diff(zcuotas1,12)))
+ggtsdisplay(diff(diff(zcuotas2,12)))
+
+```
+
+# ARIMA
+
+### Colgate: 
+
+A continuación selecciono el número de observaciones para comparar el forecast. Para ello omito los 16 últimos datos que corresponden a las semanas de 1963.
+```{r}
+cOmit = 16 #numero de observaciones para comparar el forecast
+
+#El tamaño de los datos
+
+nObs = length(zcuotas1)
+
+# Subsample: Para la predicción
+ocuotas1 <- window(zcuotas1, start = index(zcuotas1[1], end = index(zcuotas1[nObs-cOmit])))
+
+# Out sample
+
+pcuotas1 <- window(zcuotas1, start = index(zcuotas1[nObs-cOmit+1]), end = index(zcuotas1[nObs]))
+pcuotas1
+
+
+```
+
+#### ARIMA model automatic: fitting del modelo ARIMA.
+
+```{r}
+fitColgate = auto.arima(ocuotas1, lambda =0)
+summary(fitColgate)
+```
+
+Se puede observar que el mejor modelo es el ARIMA(0,1,1) para Colgate.
+
+```{r, warning=FALSE}
+ggtsdisplay(fitColgate$residuals)
+```
+
+```{r, warning=FALSE}
+gData=data.frame(Date=time(fitColgate$residuals), fitColgate$residuals, check.names=FALSE, row.names=NULL)
+ggplot(gData, aes(x=ts(fitColgate$residuals))) +
+  geom_point(aes(x=Date,y=fitColgate$residuals))+
+  geom_line(aes(x=Date,y=fitColgate$residuals))+
+  geom_hline(yintercept = 2*sd(fitColgate$residuals),color="red",linetype = 2)+
+  geom_hline(yintercept = -2*sd(fitColgate$residuals),color="red",linetype = 2)+
+  ylab("Residuos")+
+  ggtitle("Residuos Modelo ARIMA: Cuotas Semanales Colgate")+
+  xlab("Semanas")
+```
+
+Forecast
+```{r}
+fcuotas1.arima = forecast(fitColgate, h=16)
+summary(fcuotas1.arima)
+```
+```{r}
+plot(fcuotas1.arima)
+```
+
+```{r}
+#Forecast out of the sample
+cOmit=0
+
+#Data Size
+nObs=length(zcuotas1)
+
+#sub_sample
+ocuota1 <- window(zcuotas1,start=index(zcuotas1[1]),end=index(zcuotas1[nObs-cOmit]))
+## ARIMA
+fit2=auto.arima(ocuota1,lambda=0, d=1,D=0)
+fventas.arima=forecast(fitColgate)
+
+fventas.arima
+```
+
+### Crest:
+A continuación hago lo mismo que Colgate pero para Crest.
+
+```{r}
+cOmit = 16 #numero de observaciones para comparar el forecast
+
+#El tamaño de los datos
+
+nObs = length(zcuotas2)
+
+# Subsample
+ocuotas2 <- window(zcuotas2, start = index(zcuotas2[1], end = index(zcuotas2[nObs-cOmit])))
+
+# Out sample
+
+pcuotas2 <- window(zcuotas2, start = index(zcuotas2[nObs-cOmit+1]), end = index(zcuotas2[nObs]))
+
+```
+
+ARIMA model automatic
+
+```{r}
+fitCrest = auto.arima(ocuotas2, lambda =0)
+summary(fitCrest)
+```
+
+Se puede observar que el mejor modelo es el ARIMA(3,1,0) teniendo en cuenta el parámetro AIC. 
+
+```{r}
+ggtsdisplay(fitCrest$residuals)
+```
+```{r  warning=FALSE}
+gData=data.frame(Date=time(fitCrest$residuals), fitCrest$residuals, check.names=FALSE, row.names=NULL)
+ggplot(gData, aes(x=fitCrest$residuals)) +
+  geom_point(aes(x=Date,y=fitCrest$residuals))+
+  geom_line(aes(x=Date,y=fitCrest$residuals))+
+  geom_hline(yintercept = 2*sd(fitCrest$residuals),color="red",linetype = 2)+
+  geom_hline(yintercept = -2*sd(fitCrest$residuals),color="red",linetype = 2)+
+  ylab("Residuos")+
+  ggtitle("Residuos Modelo ARIMA: Cuotas Semanales Crest")+
+  xlab("Semanas")
+```
+
+Forecast
+```{r}
+fcuotas2.arima = forecast(fitCrest, h=16)
+fcuotas2.arima
+```
+Plot
+
+```{r}
+autoplot(fcuotas2.arima)
+```
+
+```{r}
+#Forecast out of the sample
+cOmit=0
+
+#Data Size
+nObs=length(zcuotas2)
+
+#sub_sample
+ocuota2 <- window(zcuotas2,start=index(zcuotas2[1]),end=index(zcuotas2[nObs-cOmit]))
+## ARIMA
+fit2=auto.arima(ocuota2,lambda=0, d=1,D=0)
+fventas.arima=forecast(fitCrest)
+
+fventas.arima
+```
+
+## Outliers:
+
+Los outliers aditivos son incorporados como variables dummy en xreg. Los componentes de la función de transferencia son incorporados por el xtransf y transfer. 
+Nuestra variable dummy es 1 de agosto de 1960, que se encuentra en la posición 135, esta va a tomar valor 1 y 0 en el resto de casos. 
+
+xtransf es una matriz cuyas columnas son las variables input. 
+
+```{r}
+detectAO(fitColgate) 
+detectAO(fitCrest) 
+detectIO(fitColgate) # 99
+detectIO(fitCrest) # 102
+```
+
+Se observa que no hay outliers aditivos, sin embargo, hay outliers innovativos tanto para Colgate como para Crest. Para Colgate existe un outlier innovativo en el 99, y para Crest en el 102. 
+
+### ARIMAX COLGATE 
+
+En la función ARIMAX incluyo el outlier innovativo de Colgate que se encuentra en la posición 99.
+
+```{r}
+arimax_colgate <-arimax(as.double(zcuotas1),order=c(0,1,1),
+        xtransf=data.frame(I108=1*(seq(zcuotas1)>=135),
+                           I108=1*(seq(zcuotas1)==135)),
+        transfer=list(c(0,0),c(1,0)),
+        io = c(99),
+        method='ML')
+arimax_colgate
+```
+
+```{r}
+arimax_colgate$coef
+```
+
+
+### ARIMAX CREST
+
+```{r}
+arimax_crest <-arimax(as.double(zcuotas2),order=c(3,1,0),
+        xtransf=data.frame(I108=1*(seq(zcuotas2)>=135),
+                           I108=1*(seq(zcuotas2)==135)),
+        xreg = data.frame(A60_2 = 1*(seq(zcuotas1) == 136)),
+        transfer=list(c(0,0),c(1,0)),
+        io = c(102),
+        method='ML')
+arimax_crest
+```
+
+## Outliers
+
+```{r}
+detectAO(arimax_colgate)
+detectAO(arimax_crest)
+```
+```{r}
+detectIO(arimax_colgate)
+detectIO(arimax_crest)
+```
+
+No hay outliers. 
+
+## Función de transferencia
+
+```{r}
+ggtsdisplay(arimax_colgate$residuals)
+```
+```{r}
+mod1 <- arimax(as.double(zcuotas1),
+               order = c(0,1,1),
+               include.mean = TRUE,
+               xtransf=zcuotas2,
+               transfer=list(c(0,0)),
+               method = "ML")
+
+mod1
+               
+              
+```
+
+```{r}
+ggtsdisplay(mod1$residuals)
+```
+```{r}
+plot(mod1$coef, type = "h")
+```
+
+
